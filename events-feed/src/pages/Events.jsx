@@ -1,15 +1,12 @@
+// src/pages/Events.jsx
 import React, { useState, useEffect } from "react";
 import PosterCard from "../components/PosterCard";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { templates } from "../components/PosterTemplates";
 
 export default function Events() {
   const [events, setEvents] = useState([]);
   const [initialLoad, setInitialLoad] = useState(true);
-
-  // Store template index per event to avoid repetition
-  const [eventTemplates, setEventTemplates] = useState({});
 
   const fetchEvents = () => {
     fetch("http://localhost:5000/events")
@@ -27,34 +24,11 @@ export default function Events() {
           venue: event.venue,
         }));
 
-        // ✅ Update only if different
         const isDifferent =
           JSON.stringify(mappedEvents) !== JSON.stringify(events);
 
         if (isDifferent) {
           setEvents(mappedEvents);
-
-          // Assign templates without repetition
-          const usedIndexes = [];
-          const newEventTemplates = {};
-          mappedEvents.forEach((e) => {
-            let availableIndexes = templates
-              .map((_, i) => i)
-              .filter((i) => !usedIndexes.includes(i));
-
-            if (availableIndexes.length === 0) {
-              // reset if all templates used
-              usedIndexes.length = 0;
-              availableIndexes = templates.map((_, i) => i);
-            }
-
-            const randomIndex =
-              availableIndexes[Math.floor(Math.random() * availableIndexes.length)];
-            usedIndexes.push(randomIndex);
-            newEventTemplates[e.id] = randomIndex;
-          });
-
-          setEventTemplates(newEventTemplates);
         }
 
         if (initialLoad) setInitialLoad(false);
@@ -68,29 +42,54 @@ export default function Events() {
     return () => clearInterval(interval);
   }, [events]);
 
+  // Split events into rows of max 3 posters
+  const rows = [];
+  for (let i = 0; i < events.length; i += 3) {
+    rows.push(events.slice(i, i + 3));
+  }
+
   return (
     <div
       style={{
         display: "flex",
-        flexDirection: "row",
-        overflowX: "auto",
+        flexDirection: "column",
+        alignItems: "center",
         padding: "20px",
-        backgroundColor: "#f0f2f5",
+        backgroundColor: "#ffffff",
         minHeight: "100vh",
+        gap: "40px", // vertical space between rows
       }}
     >
       {initialLoad && events.length === 0 ? (
-        <p style={{ margin: "auto" }}>Loading events...</p>
+        <p>Loading events...</p>
       ) : events.length > 0 ? (
-        events.map((event) => (
-          <PosterCard
-            key={event.id}
-            event={event}
-            templateIndex={eventTemplates[event.id]}
-          />
+        rows.map((row, rowIndex) => (
+          <div
+            key={rowIndex}
+            style={{
+              display: "flex",
+              justifyContent:
+                row.length === 1
+                  ? "center"
+                  : row.length === 2
+                  ? "space-evenly"
+                  : "flex-start",
+              gap: "20px", // horizontal space between posters
+              width: "100%",
+              maxWidth: "1300px", // 3 posters per row
+            }}
+          >
+            {row.map((event, index) => (
+              <PosterCard
+                key={event.id}
+                event={event}
+                templateIndex={rowIndex * 3 + index}
+              />
+            ))}
+          </div>
         ))
       ) : (
-        <p style={{ margin: "auto" }}>No events to display</p>
+        <p>No events to display</p>
       )}
 
       <ToastContainer

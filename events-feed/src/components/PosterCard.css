@@ -83,7 +83,7 @@
   border: none;
   border-radius: 8px;
   font-weight: bold;
-  color: #fff;
+  color: #ffffff;
   cursor: pointer;
   user-select: none; /* prevents text selection on click */
 }
