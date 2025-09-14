@@ -1,4 +1,5 @@
-.poster-card {
+/* Scope all styles inside poster-card-wrapper */
+.poster-card-wrapper .poster-card {
   width: 400px;      /* portrait width */
   height: 600px;     /* portrait height */
   border-radius: 10px;
@@ -12,7 +13,7 @@
 }
 
 /* Title at top */
-.poster-title {
+.poster-card-wrapper .poster-title {
   position: absolute;
   top: 30px;
   left: 20px;
@@ -23,7 +24,7 @@
 }
 
 /* Organizer */
-.poster-organizer {
+.poster-card-wrapper .poster-organizer {
   position: absolute;
   top: 100px;
   left: 20px;
@@ -31,7 +32,7 @@
 }
 
 /* Category */
-.poster-category {
+.poster-card-wrapper .poster-category {
   position: absolute;
   top: 140px;
   left: 20px;
@@ -39,7 +40,7 @@
 }
 
 /* Description */
-.poster-description {
+.poster-card-wrapper .poster-description {
   position: absolute;
   top: 180px;
   left: 20px;
@@ -49,7 +50,7 @@
 }
 
 /* Date */
-.poster-date {
+.poster-card-wrapper .poster-date {
   position: absolute;
   bottom: 120px;
   left: 20px;
@@ -57,7 +58,7 @@
 }
 
 /* Time */
-.poster-time {
+.poster-card-wrapper .poster-time {
   position: absolute;
   bottom: 90px;
   left: 20px;
@@ -65,14 +66,15 @@
 }
 
 /* Venue */
-.poster-venue {
+.poster-card-wrapper .poster-venue {
   position: absolute;
   bottom: 60px;
   left: 20px;
   font-size: 16px;
 }
 
-.register-button {
+/* Register button */
+.poster-card-wrapper .register-button {
   position: absolute;
   bottom: 20px;
   left: 50%;
@@ -86,20 +88,19 @@
   user-select: none; /* prevents text selection on click */
 }
 
-.register-button:active {
-  transform: translateX(-50%) scale(0.97); /* slightly shrinks inside */
+.poster-card-wrapper .register-button:active {
+  transform: translateX(-50%) scale(0.97); /* clicked effect */
 }
 
-
-.poster-date svg,
-.poster-time svg,
-.poster-venue svg {
+.poster-card-wrapper .poster-date svg,
+.poster-card-wrapper .poster-time svg,
+.poster-card-wrapper .poster-venue svg {
   vertical-align: middle;
   color: inherit; /* same as text */
 }
+
 /* Ordinary pop on poster hover */
-.poster-card:hover {
+.poster-card-wrapper .poster-card:hover {
   transform: scale(1.05);
   transition: transform 0.15s ease;
 }
-

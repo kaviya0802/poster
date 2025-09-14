@@ -59,47 +59,48 @@ export default function PosterCard({ event, templateIndex }) {
   };
 
   return (
-    <div
-      className="poster-card"
-      style={{ backgroundImage: `url(${template.backgroundImage})` }}
-    >
-      <h2 className="poster-title" style={{ color: template.textColor }}>
-        {event.name ?? event.event_name}
-      </h2>
-
-      <p className="poster-organizer" style={{ color: template.textColor }}>
-        Organizer: {event.organizer}
-      </p>
-
-      <p className="poster-category" style={{ color: template.textColor }}>
-        Category: {event.category}
-      </p>
-
-      <p className="poster-description" style={{ color: template.textColor }}>
-        {event.description}
-      </p>
-
-      <p className="poster-date" style={{ color: template.textColor }}>
-        <FaCalendarAlt style={{ marginRight: "6px" }} /> {eventDate}
-      </p>
-
-      <p className="poster-time" style={{ color: template.textColor }}>
-        <FaClock style={{ marginRight: "6px" }} /> {startTime}
-        {endTime ? ` – ${endTime}` : ""}
-      </p>
-
-      <p className="poster-venue" style={{ color: template.textColor }}>
-        <FaMapMarkerAlt style={{ marginRight: "6px" }} /> {event.venue}
-      </p>
-
-      <button
-        className="register-button"
-        style={{ backgroundColor: template.accentColor }}
-        onClick={handleRegister}
+    <div className="poster-card-wrapper">
+      <div
+        className="poster-card"
+        style={{ backgroundImage: `url(${template.backgroundImage})` }}
       >
-        Register
-      </button>
+        <h2 className="poster-title" style={{ color: template.textColor }}>
+          {event.name ?? event.event_name}
+        </h2>
+
+        <p className="poster-organizer" style={{ color: template.textColor }}>
+          Organizer: {event.organizer}
+        </p>
+
+        <p className="poster-category" style={{ color: template.textColor }}>
+          Category: {event.category}
+        </p>
+
+        <p className="poster-description" style={{ color: template.textColor }}>
+          {event.description}
+        </p>
+
+        <p className="poster-date" style={{ color: template.textColor }}>
+          <FaCalendarAlt style={{ marginRight: "6px" }} /> {eventDate}
+        </p>
+
+        <p className="poster-time" style={{ color: template.textColor }}>
+          <FaClock style={{ marginRight: "6px" }} /> {startTime}
+          {endTime ? ` – ${endTime}` : ""}
+        </p>
+
+        <p className="poster-venue" style={{ color: template.textColor }}>
+          <FaMapMarkerAlt style={{ marginRight: "6px" }} /> {event.venue}
+        </p>
+
+        <button
+          className="register-button"
+          style={{ backgroundColor: template.accentColor }}
+          onClick={handleRegister}
+        >
+          Register
+        </button>
+      </div>
     </div>
   );
 }
-
