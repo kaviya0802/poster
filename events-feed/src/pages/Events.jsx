@@ -63,6 +63,23 @@ export default function Events() {
 
   return (
     <div className="events-container">
+      {/* Header section */}
+      <div
+        style={{
+          textAlign: "center",
+          marginBottom: "30px",
+        }}
+      >
+        <h1 style={{ fontSize: "36px", margin: "0", color: "#333" }}>
+          Explore Our Exclusive Alumni Events
+        </h1>
+        <p style={{ fontSize: "18px", margin: "8px 0", color: "#555" }}>
+          Connect, Learn, and Network with Industry Leaders
+        </p>
+        <hr style={{ width: "60px", borderTop: "3px solid #007bff", margin: "20px auto" }} />
+      </div>
+
+      {/* Events grid */}
       {initialLoad && events.length === 0 ? (
         <p>Loading events...</p>
       ) : events.length > 0 ? (
