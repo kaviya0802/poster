@@ -2,7 +2,8 @@
 import React, { useState, useEffect } from "react";
 import PosterCard from "../components/PosterCard";
 import { ToastContainer } from "react-toastify";
-import 'react-toastify/dist/ReactToastify.css';
+import "react-toastify/dist/ReactToastify.css";
+import { templates } from "../components/PosterTemplates"; // import templates here
 
 export default function Events() {
   const [events, setEvents] = useState([]);
@@ -22,7 +23,17 @@ export default function Events() {
           endTime: event.end_time,
           venue: event.venue,
         }));
-        setEvents(mappedEvents);
+
+        // 🔹 Shuffle templates so order changes each time
+        const shuffledTemplates = [...templates].sort(() => Math.random() - 0.5);
+
+        // 🔹 Assign templates in order without repeating until all are used
+        const withTemplates = mappedEvents.map((event, index) => ({
+          ...event,
+          template: shuffledTemplates[index % shuffledTemplates.length],
+        }));
+
+        setEvents(withTemplates);
       })
       .catch((err) => console.error("Error fetching events:", err));
   }, []);
@@ -39,8 +50,8 @@ export default function Events() {
       }}
     >
       {events.length > 0 ? (
-        events.map((event, index) => (
-          <PosterCard key={event.id} event={event} index={index} />
+        events.map((event) => (
+          <PosterCard key={event.id} event={event} />
         ))
       ) : (
         <p style={{ margin: "auto" }}>No events to display</p>

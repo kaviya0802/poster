@@ -1,12 +1,11 @@
 import React from "react";
 import "./PosterCard.css";
-import { templates } from "./PosterTemplates";
 import { toast } from "react-toastify"; // import toast
 import { FaCalendarAlt, FaClock, FaMapMarkerAlt } from "react-icons/fa";
 
 function formatDateString(dateInput) {
   if (!dateInput) return "";
-  
+
   if (/^\d{4}-\d{2}-\d{2}$/.test(dateInput)) {
     return dateInput;
   }
@@ -35,15 +34,16 @@ function formatTimeString(timeInput) {
   return timeInput;
 }
 
-export default function PosterCard({ event, index }) {
+export default function PosterCard({ event }) {
   if (!event) return null;
 
-  const template = templates[index % templates.length];
+  // ✅ Template comes directly from Events.jsx
+  const template = event.template;
+
   const eventDate = formatDateString(event.date ?? event.event_date ?? "");
   const startTime = formatTimeString(event.startTime ?? event.start_time ?? "");
   const endTime = formatTimeString(event.endTime ?? event.end_time ?? "");
 
-  // ✅ Register button click handler
   const handleRegister = () => {
     toast.success(`Successfully registered for "${event.name ?? event.event_name}"!`);
   };
@@ -74,7 +74,8 @@ export default function PosterCard({ event, index }) {
       </p>
 
       <p className="poster-time" style={{ color: template.textColor }}>
-        <FaClock style={{ marginRight: "6px" }} /> {startTime}{endTime ? ` – ${endTime}` : ""}
+        <FaClock style={{ marginRight: "6px" }} /> {startTime}
+        {endTime ? ` – ${endTime}` : ""}
       </p>
 
       <p className="poster-venue" style={{ color: template.textColor }}>
@@ -84,10 +85,11 @@ export default function PosterCard({ event, index }) {
       <button
         className="register-button"
         style={{ backgroundColor: template.accentColor }}
-        onClick={handleRegister} // make sure onClick is here
+        onClick={handleRegister}
       >
         Register
       </button>
     </div>
   );
 }
+
