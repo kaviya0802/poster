@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react";
 import PosterCard from "../components/PosterCard";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import "./Events.css"; // import CSS for scroll hiding
 
 export default function Events() {
   const [events, setEvents] = useState([]);
@@ -49,17 +50,7 @@ export default function Events() {
   }
 
   return (
-    <div
-      style={{
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-        padding: "20px",
-        backgroundColor: "#ffffff",
-        minHeight: "100vh",
-        gap: "40px", // vertical space between rows
-      }}
-    >
+    <div className="events-container">
       {initialLoad && events.length === 0 ? (
         <p>Loading events...</p>
       ) : events.length > 0 ? (
@@ -74,9 +65,9 @@ export default function Events() {
                   : row.length === 2
                   ? "space-evenly"
                   : "flex-start",
-              gap: "20px", // horizontal space between posters
+              gap: "20px",
               width: "100%",
-              maxWidth: "1300px", // 3 posters per row
+              maxWidth: "1300px",
             }}
           >
             {row.map((event, index) => (
