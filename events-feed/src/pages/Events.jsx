@@ -1,14 +1,16 @@
-// src/pages/Events.jsx
 import React, { useState, useEffect } from "react";
 import PosterCard from "../components/PosterCard";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { templates } from "../components/PosterTemplates";
 
 export default function Events() {
   const [events, setEvents] = useState([]);
-  const [initialLoad, setInitialLoad] = useState(true); // ✅ for first load only
+  const [initialLoad, setInitialLoad] = useState(true);
 
-  // Fetch events from backend
+  // Store template index per event to avoid repetition
+  const [eventTemplates, setEventTemplates] = useState({});
+
   const fetchEvents = () => {
     fetch("http://localhost:5000/events")
       .then((res) => res.json())
@@ -25,12 +27,34 @@ export default function Events() {
           venue: event.venue,
         }));
 
-        // ✅ Update only if data actually changed
+        // ✅ Update only if different
         const isDifferent =
           JSON.stringify(mappedEvents) !== JSON.stringify(events);
 
         if (isDifferent) {
           setEvents(mappedEvents);
+
+          // Assign templates without repetition
+          const usedIndexes = [];
+          const newEventTemplates = {};
+          mappedEvents.forEach((e) => {
+            let availableIndexes = templates
+              .map((_, i) => i)
+              .filter((i) => !usedIndexes.includes(i));
+
+            if (availableIndexes.length === 0) {
+              // reset if all templates used
+              usedIndexes.length = 0;
+              availableIndexes = templates.map((_, i) => i);
+            }
+
+            const randomIndex =
+              availableIndexes[Math.floor(Math.random() * availableIndexes.length)];
+            usedIndexes.push(randomIndex);
+            newEventTemplates[e.id] = randomIndex;
+          });
+
+          setEventTemplates(newEventTemplates);
         }
 
         if (initialLoad) setInitialLoad(false);
@@ -39,10 +63,10 @@ export default function Events() {
   };
 
   useEffect(() => {
-    fetchEvents(); // load once at start
-    const interval = setInterval(fetchEvents, 5000); // poll every 5s
+    fetchEvents();
+    const interval = setInterval(fetchEvents, 5000);
     return () => clearInterval(interval);
-  }, [events]); // keep watching events for updates
+  }, [events]);
 
   return (
     <div
@@ -58,12 +82,17 @@ export default function Events() {
       {initialLoad && events.length === 0 ? (
         <p style={{ margin: "auto" }}>Loading events...</p>
       ) : events.length > 0 ? (
-        events.map((event) => <PosterCard key={event.id} event={event} />)
+        events.map((event) => (
+          <PosterCard
+            key={event.id}
+            event={event}
+            templateIndex={eventTemplates[event.id]}
+          />
+        ))
       ) : (
         <p style={{ margin: "auto" }}>No events to display</p>
       )}
 
-      {/* ToastContainer */}
       <ToastContainer
         position="top-right"
         autoClose={2000}

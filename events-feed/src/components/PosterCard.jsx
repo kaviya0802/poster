@@ -5,7 +5,7 @@ import { templates } from "./PosterTemplates";
 import { toast } from "react-toastify"; 
 import { FaCalendarAlt, FaClock, FaMapMarkerAlt } from "react-icons/fa";
 
-// ✅ Add helper functions here
+// ✅ Helper functions
 function formatDateString(dateInput) {
   if (!dateInput) return "";
 
@@ -37,13 +37,13 @@ function formatTimeString(timeInput) {
   return timeInput;
 }
 
-export default function PosterCard({ event }) {
+export default function PosterCard({ event, templateIndex }) {
   if (!event) return null;
 
-  // ✅ Safe fallback template
+  // ✅ Use the templateIndex passed from Events.jsx
   const template =
     templates && templates.length > 0
-      ? templates[Math.floor(Math.random() * templates.length)]
+      ? templates[templateIndex ?? Math.floor(Math.random() * templates.length)]
       : {
           backgroundImage: "",
           textColor: "#000",
@@ -102,3 +102,4 @@ export default function PosterCard({ event }) {
     </div>
   );
 }
+
