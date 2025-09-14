@@ -1,8 +1,11 @@
+// src/components/PosterCard.jsx
 import React from "react";
 import "./PosterCard.css";
-import { toast } from "react-toastify"; // import toast
+import { templates } from "./PosterTemplates";
+import { toast } from "react-toastify"; 
 import { FaCalendarAlt, FaClock, FaMapMarkerAlt } from "react-icons/fa";
 
+// ✅ Add helper functions here
 function formatDateString(dateInput) {
   if (!dateInput) return "";
 
@@ -37,8 +40,15 @@ function formatTimeString(timeInput) {
 export default function PosterCard({ event }) {
   if (!event) return null;
 
-  // ✅ Template comes directly from Events.jsx
-  const template = event.template;
+  // ✅ Safe fallback template
+  const template =
+    templates && templates.length > 0
+      ? templates[Math.floor(Math.random() * templates.length)]
+      : {
+          backgroundImage: "",
+          textColor: "#000",
+          accentColor: "#007bff",
+        };
 
   const eventDate = formatDateString(event.date ?? event.event_date ?? "");
   const startTime = formatTimeString(event.startTime ?? event.start_time ?? "");
@@ -92,4 +102,3 @@ export default function PosterCard({ event }) {
     </div>
   );
 }
-

@@ -3,12 +3,13 @@ import React, { useState, useEffect } from "react";
 import PosterCard from "../components/PosterCard";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { templates } from "../components/PosterTemplates"; // import templates here
 
 export default function Events() {
   const [events, setEvents] = useState([]);
+  const [initialLoad, setInitialLoad] = useState(true); // ✅ for first load only
 
-  useEffect(() => {
+  // Fetch events from backend
+  const fetchEvents = () => {
     fetch("http://localhost:5000/events")
       .then((res) => res.json())
       .then((data) => {
@@ -24,19 +25,24 @@ export default function Events() {
           venue: event.venue,
         }));
 
-        // 🔹 Shuffle templates so order changes each time
-        const shuffledTemplates = [...templates].sort(() => Math.random() - 0.5);
+        // ✅ Update only if data actually changed
+        const isDifferent =
+          JSON.stringify(mappedEvents) !== JSON.stringify(events);
 
-        // 🔹 Assign templates in order without repeating until all are used
-        const withTemplates = mappedEvents.map((event, index) => ({
-          ...event,
-          template: shuffledTemplates[index % shuffledTemplates.length],
-        }));
+        if (isDifferent) {
+          setEvents(mappedEvents);
+        }
 
-        setEvents(withTemplates);
+        if (initialLoad) setInitialLoad(false);
       })
       .catch((err) => console.error("Error fetching events:", err));
-  }, []);
+  };
+
+  useEffect(() => {
+    fetchEvents(); // load once at start
+    const interval = setInterval(fetchEvents, 5000); // poll every 5s
+    return () => clearInterval(interval);
+  }, [events]); // keep watching events for updates
 
   return (
     <div
@@ -49,15 +55,15 @@ export default function Events() {
         minHeight: "100vh",
       }}
     >
-      {events.length > 0 ? (
-        events.map((event) => (
-          <PosterCard key={event.id} event={event} />
-        ))
+      {initialLoad && events.length === 0 ? (
+        <p style={{ margin: "auto" }}>Loading events...</p>
+      ) : events.length > 0 ? (
+        events.map((event) => <PosterCard key={event.id} event={event} />)
       ) : (
         <p style={{ margin: "auto" }}>No events to display</p>
       )}
 
-      {/* ToastContainer only once at top-right */}
+      {/* ToastContainer */}
       <ToastContainer
         position="top-right"
         autoClose={2000}
@@ -70,5 +76,3 @@ export default function Events() {
     </div>
   );
 }
-
-
