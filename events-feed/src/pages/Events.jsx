@@ -4,10 +4,12 @@ import PosterCard from "../components/PosterCard";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "./Events.css"; // import CSS for scroll hiding
+import { templates } from "../components/PosterTemplates"; // import templates
 
 export default function Events() {
   const [events, setEvents] = useState([]);
   const [initialLoad, setInitialLoad] = useState(true);
+  const [templateOrder, setTemplateOrder] = useState([]);
 
   const fetchEvents = () => {
     fetch("http://localhost:5000/events")
@@ -30,6 +32,16 @@ export default function Events() {
 
         if (isDifferent) {
           setEvents(mappedEvents);
+
+          // Generate shuffled template indices
+          const templateCount = templates.length;
+          const indices = [];
+          while (indices.length < mappedEvents.length) {
+            const shuffled = [...Array(templateCount).keys()]
+              .sort(() => Math.random() - 0.5);
+            indices.push(...shuffled);
+          }
+          setTemplateOrder(indices.slice(0, mappedEvents.length));
         }
 
         if (initialLoad) setInitialLoad(false);
@@ -74,7 +86,7 @@ export default function Events() {
               <PosterCard
                 key={event.id}
                 event={event}
-                templateIndex={rowIndex * 3 + index}
+                templateIndex={templateOrder[rowIndex * 3 + index]}
               />
             ))}
           </div>
