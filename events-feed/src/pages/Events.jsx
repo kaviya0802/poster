@@ -1,6 +1,8 @@
+// src/pages/Events.jsx
 import React, { useState, useEffect } from "react";
 import PosterCard from "../components/PosterCard";
 import { ToastContainer } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
 
 export default function Events() {
   const [events, setEvents] = useState([]);
@@ -15,12 +17,10 @@ export default function Events() {
           organizer: event.organizer,
           category: event.category,
           description: event.description,
-          date: event.event_date,       // matches your db
+          date: event.event_date,
           startTime: event.start_time,
           endTime: event.end_time,
           venue: event.venue,
-          alumniId: event.alumni_id,
-          createdAt: event.created_at
         }));
         setEvents(mappedEvents);
       })
@@ -45,7 +45,18 @@ export default function Events() {
       ) : (
         <p style={{ margin: "auto" }}>No events to display</p>
       )}
-      <ToastContainer />
+
+      {/* ToastContainer only once at top-right */}
+      <ToastContainer
+        position="top-right"
+        autoClose={2000}
+        hideProgressBar
+        newestOnTop
+        closeOnClick
+        pauseOnHover
+        draggable
+      />
     </div>
   );
 }
+
