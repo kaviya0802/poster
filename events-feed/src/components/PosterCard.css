@@ -1,4 +1,5 @@
-.poster-card-wrapper .poster-card {
+
+  .poster-card-wrapper .poster-card {
   width: 400px;
   height: 600px;
   border-radius: 10px;
@@ -18,12 +19,13 @@
 
 .poster-card-wrapper .poster-title {
   position: absolute;
-  top: 30px;
+  top: 0px;
   left: 20px;
   right: 20px;
-  font-size: 28px;
+  font-size: 25px;
   font-weight: bold;
   text-align: center;
+  margin-bottom: 20px; /* added space below title */
 }
 
 .poster-card-wrapper .poster-organizer,
@@ -38,21 +40,21 @@
 }
 
 .poster-card-wrapper .poster-organizer {
-  top: 100px;
+  top: 70px; /* shifted down to avoid merging with title */
 }
 .poster-card-wrapper .poster-category {
-  top: 140px;
+  top: 90px;
 }
 .poster-card-wrapper .poster-description {
-  top: 180px;
+  top: 120px;
   right: 20px;
   font-style: italic;
 }
 .poster-card-wrapper .poster-date {
-  bottom: 120px;
+  bottom: 100px;
 }
 .poster-card-wrapper .poster-time {
-  bottom: 90px;
+  bottom: 80px;
 }
 .poster-card-wrapper .poster-venue {
   bottom: 60px;
@@ -71,16 +73,7 @@
   cursor: pointer;
 }
 
-/* Responsive tweaks */
-@media (min-width: 1025px) {
-  .poster-card-wrapper .poster-card {
-    width: 420px;
-    height: 630px;
-  }
-  .poster-card-wrapper .poster-title {
-    font-size: 32px;
-  }
-}
+
 
 @media (min-width: 768px) and (max-width: 1024px) {
   .poster-card-wrapper .poster-card {
@@ -98,87 +91,77 @@
   .poster-card-wrapper .poster-venue {
     font-size: 14px;
   }
-}
-
-/* MOBILE VIEW - <768px */
-@media (max-width: 767px) {
-  .poster-feed {
-    flex-direction: column;    /* one poster per row */
-    align-items: center;
-    gap: 20px;                 /* vertical spacing between posts */
-    width: 100%;
+    .poster-card-wrapper .register-button {
+    bottom: 10px;
+    padding: 10px 16px;  /* reduced size */
+    font-size: 14px;     /* reduced font */
   }
-
-  .poster-card-wrapper .poster-card {
-    width: 300px;               /* smaller than tablet */
-    height: 450px;              /* keep portrait ratio similar to tablet */
-    border-radius: 8px;
-    margin: 0;
-    flex-shrink: 0;
-    overflow: hidden;
-    background-size: cover;
-    background-position: center;
-    position: relative;         /* keep absolute positions inside */
+  poster-card-wrapper .register-button {
+    bottom: 10px;
+    padding: 8px 14px;   /* smaller button */
+    font-size: 13px;      /* smaller font */
   }
-
-  .poster-card-wrapper .poster-title {
-    font-size: 20px;
-    top: 20px;
-    left: 15px;
-    right: 15px;
+  .Toastify__toast {
+    min-height: 40px;       /* smaller toast height */
+    font-size: 13px;        /* smaller font */
+    padding: 8px 12px;
   }
-
-  .poster-card-wrapper .poster-organizer {
-    font-size: 12px;
-    top: 80px;
-    left: 15px;
-  }
-
-  .poster-card-wrapper .poster-category {
-    font-size: 12px;
-    top: 115px;
-    left: 15px;
-  }
-
-  .poster-card-wrapper .poster-description {
-    font-size: 11px;
-    top: 150px;
-    left: 15px;
-    right: 15px;
-  }
-
-  .poster-card-wrapper .poster-date {
-    font-size: 12px;
-    bottom: 100px;
-    left: 15px;
-  }
-
-  .poster-card-wrapper .poster-time {
-    font-size: 12px;
-    bottom: 70px;
-    left: 15px;
-  }
-
-  .poster-card-wrapper .poster-venue {
-    font-size: 12px;
-    bottom: 40px;
-    left: 15px;
-  }
-
-  .poster-card-wrapper .register-button {
-    font-size: 12px;
-    padding: 8px 16px;
-    bottom: 15px;
-    left: 50%;
-    transform: translateX(-50%);
-  }
-
-  .events-header h1 {
-    font-size: 22px;
-    margin-bottom: 8px;
-  }
-  .events-header p {
+  .Toastify__toast-body {
     font-size: 13px;
   }
 }
+
+@media (max-width: 767px) {
+  .poster-card-wrapper .poster-card {
+    width: 90%;               /* almost full width */
+    max-width: 360px;         /* limit max width */
+    min-width: 280px;         /* prevent shrinking too small */
+    height: auto;
+    aspect-ratio: 2/3;        /* maintain portrait ratio */
+  }
+
+  .poster-card-wrapper .poster-title {
+    font-size: 20px;   
+
+  }
+
+  .poster-card-wrapper .poster-organizer,
+  .poster-card-wrapper .poster-category,
+  .poster-card-wrapper .poster-description,
+  .poster-card-wrapper .poster-date,
+  .poster-card-wrapper .poster-time,
+  .poster-card-wrapper .poster-venue {
+    font-size: 12px;          /* readable text */
+  }
+  
+  .poster-card-wrapper .poster-venue{
+    bottom:35px;
+  }
+  
+  .poster-card-wrapper .poster-time{
+    bottom:50px;
+  }
+  .poster-card-wrapper .poster-date{
+    bottom:65px;
+  }
+  .poster-card-wrapper .register-button {
+    bottom: 10px;
+    padding: 8px 14px;  /* smaller button for mobile */
+    font-size: 12px;
+  }
+  .poster-card-wrapper .register-button {
+    bottom: 10px;
+    padding: 6px 12px;   /* even smaller button */
+    font-size: 12px;      /* smaller font */
+  }
+   .Toastify__toast {
+    min-height: 35px;       /* even smaller */
+    font-size: 12px;        /* smaller font */
+    padding: 6px 10px;
+  }
+  .Toastify__toast-body {
+    font-size: 12px;
+  }
+}
+
 

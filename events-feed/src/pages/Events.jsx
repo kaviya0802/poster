@@ -1,4 +1,3 @@
-// src/pages/Events.jsx
 import React, { useState, useEffect } from "react";
 import PosterCard from "../components/PosterCard";
 import { ToastContainer } from "react-toastify";
@@ -33,7 +32,7 @@ export default function Events() {
         if (isDifferent) {
           setEvents(mappedEvents);
 
-          // ✅ Generate shuffled template indices ONCE per new event set
+          // Generate shuffled template indices once per new event set
           if (mappedEvents.length !== templateOrder.length) {
             const templateCount = templates.length;
             const pool = [];
@@ -58,10 +57,10 @@ export default function Events() {
     return () => clearInterval(interval);
   }, [events]);
 
-  // Split into rows of max 3 posters
+  // Split into rows of 2 posters for desktop/tablet, mobile unaffected
   const rows = [];
-  for (let i = 0; i < events.length; i += 3) {
-    rows.push(events.slice(i, i + 3));
+  for (let i = 0; i < events.length; i += 2) {
+    rows.push(events.slice(i, i + 2));
   }
 
   return (
@@ -85,16 +84,14 @@ export default function Events() {
               justifyContent:
                 row.length === 1
                   ? "center"
-                  : row.length === 2
-                  ? "space-evenly"
-                  : "flex-start",
+                  : "space-evenly",
             }}
           >
             {row.map((event, index) => (
               <PosterCard
                 key={event.id}
                 event={event}
-                templateIndex={templateOrder[rowIndex * 3 + index]}
+                templateIndex={templateOrder[rowIndex * 2 + index]}
               />
             ))}
           </div>
