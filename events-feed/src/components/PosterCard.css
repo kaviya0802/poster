@@ -1,18 +1,21 @@
-/* Scope all styles inside poster-card-wrapper */
 .poster-card-wrapper .poster-card {
-  width: 400px;      /* portrait width */
-  height: 600px;     /* portrait height */
+  width: 400px;
+  height: 600px;
   border-radius: 10px;
   position: relative;
   overflow: hidden;
   background-size: cover;
   background-position: center;
-  box-shadow: 0 6px 18px rgba(0,0,0,0.2);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.2);
   margin: 0 15px;
   flex-shrink: 0;
+  transition: transform 0.2s ease;
 }
 
-/* Title at top */
+.poster-card-wrapper .poster-card:hover {
+  transform: scale(1.05);
+}
+
 .poster-card-wrapper .poster-title {
   position: absolute;
   top: 30px;
@@ -23,57 +26,38 @@
   text-align: center;
 }
 
-/* Organizer */
+.poster-card-wrapper .poster-organizer,
+.poster-card-wrapper .poster-category,
+.poster-card-wrapper .poster-description,
+.poster-card-wrapper .poster-date,
+.poster-card-wrapper .poster-time,
+.poster-card-wrapper .poster-venue {
+  font-size: 16px;
+  position: absolute;
+  left: 20px;
+}
+
 .poster-card-wrapper .poster-organizer {
-  position: absolute;
   top: 100px;
-  left: 20px;
-  font-size: 16px;
 }
-
-/* Category */
 .poster-card-wrapper .poster-category {
-  position: absolute;
   top: 140px;
-  left: 20px;
-  font-size: 16px;
 }
-
-/* Description */
 .poster-card-wrapper .poster-description {
-  position: absolute;
   top: 180px;
-  left: 20px;
   right: 20px;
-  font-size: 16px;
   font-style: italic;
 }
-
-/* Date */
 .poster-card-wrapper .poster-date {
-  position: absolute;
   bottom: 120px;
-  left: 20px;
-  font-size: 16px;
 }
-
-/* Time */
 .poster-card-wrapper .poster-time {
-  position: absolute;
   bottom: 90px;
-  left: 20px;
-  font-size: 16px;
 }
-
-/* Venue */
 .poster-card-wrapper .poster-venue {
-  position: absolute;
   bottom: 60px;
-  left: 20px;
-  font-size: 16px;
 }
 
-/* Register button */
 .poster-card-wrapper .register-button {
   position: absolute;
   bottom: 20px;
@@ -85,22 +69,116 @@
   font-weight: bold;
   color: #ffffff;
   cursor: pointer;
-  user-select: none; /* prevents text selection on click */
 }
 
-.poster-card-wrapper .register-button:active {
-  transform: translateX(-50%) scale(0.97); /* clicked effect */
+/* Responsive tweaks */
+@media (min-width: 1025px) {
+  .poster-card-wrapper .poster-card {
+    width: 420px;
+    height: 630px;
+  }
+  .poster-card-wrapper .poster-title {
+    font-size: 32px;
+  }
 }
 
-.poster-card-wrapper .poster-date svg,
-.poster-card-wrapper .poster-time svg,
-.poster-card-wrapper .poster-venue svg {
-  vertical-align: middle;
-  color: inherit; /* same as text */
+@media (min-width: 768px) and (max-width: 1024px) {
+  .poster-card-wrapper .poster-card {
+    width: 320px;
+    height: 500px;
+  }
+  .poster-card-wrapper .poster-title {
+    font-size: 22px;
+  }
+  .poster-card-wrapper .poster-organizer,
+  .poster-card-wrapper .poster-category,
+  .poster-card-wrapper .poster-description,
+  .poster-card-wrapper .poster-date,
+  .poster-card-wrapper .poster-time,
+  .poster-card-wrapper .poster-venue {
+    font-size: 14px;
+  }
 }
 
-/* Ordinary pop on poster hover */
-.poster-card-wrapper .poster-card:hover {
-  transform: scale(1.05);
-  transition: transform 0.15s ease;
+/* MOBILE VIEW - <768px */
+@media (max-width: 767px) {
+  .poster-feed {
+    flex-direction: column;    /* one poster per row */
+    align-items: center;
+    gap: 20px;                 /* vertical spacing between posts */
+    width: 100%;
+  }
+
+  .poster-card-wrapper .poster-card {
+    width: 300px;               /* smaller than tablet */
+    height: 450px;              /* keep portrait ratio similar to tablet */
+    border-radius: 8px;
+    margin: 0;
+    flex-shrink: 0;
+    overflow: hidden;
+    background-size: cover;
+    background-position: center;
+    position: relative;         /* keep absolute positions inside */
+  }
+
+  .poster-card-wrapper .poster-title {
+    font-size: 20px;
+    top: 20px;
+    left: 15px;
+    right: 15px;
+  }
+
+  .poster-card-wrapper .poster-organizer {
+    font-size: 12px;
+    top: 80px;
+    left: 15px;
+  }
+
+  .poster-card-wrapper .poster-category {
+    font-size: 12px;
+    top: 115px;
+    left: 15px;
+  }
+
+  .poster-card-wrapper .poster-description {
+    font-size: 11px;
+    top: 150px;
+    left: 15px;
+    right: 15px;
+  }
+
+  .poster-card-wrapper .poster-date {
+    font-size: 12px;
+    bottom: 100px;
+    left: 15px;
+  }
+
+  .poster-card-wrapper .poster-time {
+    font-size: 12px;
+    bottom: 70px;
+    left: 15px;
+  }
+
+  .poster-card-wrapper .poster-venue {
+    font-size: 12px;
+    bottom: 40px;
+    left: 15px;
+  }
+
+  .poster-card-wrapper .register-button {
+    font-size: 12px;
+    padding: 8px 16px;
+    bottom: 15px;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  .events-header h1 {
+    font-size: 22px;
+    margin-bottom: 8px;
+  }
+  .events-header p {
+    font-size: 13px;
+  }
 }
+

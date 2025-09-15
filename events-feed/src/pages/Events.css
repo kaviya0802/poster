@@ -1,6 +1,3 @@
-/* src/pages/Events.css */
-
-/* Hide scrollbars but keep scrolling functional */
 .events-container {
   display: flex;
   flex-direction: column;
@@ -11,11 +8,83 @@
   gap: 40px;
   overflow: auto;
 
-  /* Hide scrollbar visually */
-  -ms-overflow-style: none; /* IE & Edge */
-  scrollbar-width: none; /* Firefox */
+  /* Hide scrollbar but keep scrolling */
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.events-container::-webkit-scrollbar {
+  display: none;
 }
 
-.events-container::-webkit-scrollbar {
-  display: none; /* Chrome, Safari, Opera */
+/* Header styles */
+.events-header {
+  text-align: center;
+  margin-bottom: 20px;
+}
+.events-header h1 {
+  font-size: 36px;
+  margin: 0;
+  color: #333;
+}
+.events-header p {
+  font-size: 18px;
+  margin: 8px 0;
+  color: #555;
+}
+.events-header hr {
+  width: 60px;
+  border-top: 3px solid #007bff;
+  margin: 20px auto;
+  border-radius: 2px;
+}
+
+/* Poster feed row */
+.poster-feed {
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 20px;
+  width: 100%;
+  max-width: 1300px;
+}
+
+/* Responsive rules */
+@media (min-width: 1025px) {
+  .events-header h1 {
+    font-size: 42px;
+  }
+  .events-header p {
+    font-size: 20px;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 1024px) {
+  .poster-feed {
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  .events-header h1 {
+    font-size: 30px;
+  }
+  .events-header p {
+    font-size: 16px;
+  }
+}
+
+/* MOBILE VIEW */
+@media (max-width: 767px) {
+  .poster-feed {
+    flex-direction: column;
+    align-items: center;
+    gap: 25px;          /* vertical spacing between posters */
+    overflow-x: hidden;
+    width: 100%;
+  }
+
+  .events-header h1 {
+    font-size: 22px;     /* smaller header */
+    margin-bottom: 8px;
+  }
+  .events-header p {
+    font-size: 13px;     /* smaller subtext */
+  }
 }

@@ -3,8 +3,8 @@ import React, { useState, useEffect } from "react";
 import PosterCard from "../components/PosterCard";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import "./Events.css"; // import CSS for scroll hiding
-import { templates } from "../components/PosterTemplates"; // import templates
+import "./Events.css";
+import { templates } from "../components/PosterTemplates";
 
 export default function Events() {
   const [events, setEvents] = useState([]);
@@ -33,15 +33,18 @@ export default function Events() {
         if (isDifferent) {
           setEvents(mappedEvents);
 
-          // Generate shuffled template indices
-          const templateCount = templates.length;
-          const indices = [];
-          while (indices.length < mappedEvents.length) {
-            const shuffled = [...Array(templateCount).keys()]
-              .sort(() => Math.random() - 0.5);
-            indices.push(...shuffled);
+          // ✅ Generate shuffled template indices ONCE per new event set
+          if (mappedEvents.length !== templateOrder.length) {
+            const templateCount = templates.length;
+            const pool = [];
+            while (pool.length < mappedEvents.length) {
+              const shuffled = [...Array(templateCount).keys()].sort(
+                () => Math.random() - 0.5
+              );
+              pool.push(...shuffled);
+            }
+            setTemplateOrder(pool.slice(0, mappedEvents.length));
           }
-          setTemplateOrder(indices.slice(0, mappedEvents.length));
         }
 
         if (initialLoad) setInitialLoad(false);
@@ -55,7 +58,7 @@ export default function Events() {
     return () => clearInterval(interval);
   }, [events]);
 
-  // Split events into rows of max 3 posters
+  // Split into rows of max 3 posters
   const rows = [];
   for (let i = 0; i < events.length; i += 3) {
     rows.push(events.slice(i, i + 3));
@@ -63,40 +66,28 @@ export default function Events() {
 
   return (
     <div className="events-container">
-      {/* Header section */}
-      <div
-        style={{
-          textAlign: "center",
-          marginBottom: "30px",
-        }}
-      >
-        <h1 style={{ fontSize: "36px", margin: "0", color: "#333" }}>
-          Explore Our Exclusive Alumni Events
-        </h1>
-        <p style={{ fontSize: "18px", margin: "8px 0", color: "#555" }}>
-          Connect, Learn, and Network with Industry Leaders
-        </p>
-        <hr style={{ width: "60px", borderTop: "3px solid #007bff", margin: "20px auto" }} />
+      {/* Header */}
+      <div className="events-header">
+        <h1>Explore Our Exclusive Alumni Events</h1>
+        <p>Connect, Learn, and Network with Industry Leaders</p>
+        <hr />
       </div>
 
-      {/* Events grid */}
+      {/* Event Feed */}
       {initialLoad && events.length === 0 ? (
         <p>Loading events...</p>
       ) : events.length > 0 ? (
         rows.map((row, rowIndex) => (
           <div
             key={rowIndex}
+            className="poster-feed"
             style={{
-              display: "flex",
               justifyContent:
                 row.length === 1
                   ? "center"
                   : row.length === 2
                   ? "space-evenly"
                   : "flex-start",
-              gap: "20px",
-              width: "100%",
-              maxWidth: "1300px",
             }}
           >
             {row.map((event, index) => (
