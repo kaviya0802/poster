@@ -1,3 +1,4 @@
+// src/pages/Events.jsx
 import React, { useState, useEffect } from "react";
 import PosterCard from "../components/PosterCard";
 import "./Events.css";
@@ -22,22 +23,22 @@ export default function Events() {
           startTime: event.start_time,
           endTime: event.end_time,
           venue: event.venue,
+          contact: event.contact,
+          posterpath: event.posterpath,
+          videopath: event.videopath,
+          registration_link: event.registration_link,
         }));
 
-        const isDifferent =
-          JSON.stringify(mappedEvents) !== JSON.stringify(events);
+        const isDifferent = JSON.stringify(mappedEvents) !== JSON.stringify(events);
 
         if (isDifferent) {
           setEvents(mappedEvents);
 
-          // Generate shuffled template indices once per new event set
           if (mappedEvents.length !== templateOrder.length) {
             const templateCount = templates.length;
             const pool = [];
             while (pool.length < mappedEvents.length) {
-              const shuffled = [...Array(templateCount).keys()].sort(
-                () => Math.random() - 0.5
-              );
+              const shuffled = [...Array(templateCount).keys()].sort(() => Math.random() - 0.5);
               pool.push(...shuffled);
             }
             setTemplateOrder(pool.slice(0, mappedEvents.length));
@@ -55,7 +56,6 @@ export default function Events() {
     return () => clearInterval(interval);
   }, [events]);
 
-  // Split into rows of 2 posters for desktop/tablet, mobile unaffected
   const rows = [];
   for (let i = 0; i < events.length; i += 2) {
     rows.push(events.slice(i, i + 2));
@@ -63,14 +63,12 @@ export default function Events() {
 
   return (
     <div className="events-container">
-      {/* Header */}
       <div className="events-header">
         <h1>Explore Our Exclusive Alumni Events</h1>
         <p>Connect, Learn, and Network with Industry Leaders</p>
         <hr />
       </div>
 
-      {/* Event Feed */}
       {initialLoad && events.length === 0 ? (
         <p>Loading events...</p>
       ) : events.length > 0 ? (
@@ -79,10 +77,7 @@ export default function Events() {
             key={rowIndex}
             className="poster-feed"
             style={{
-              justifyContent:
-                row.length === 1
-                  ? "center"
-                  : "space-evenly",
+              justifyContent: row.length === 1 ? "center" : "space-evenly",
             }}
           >
             {row.map((event, index) => (
@@ -100,3 +95,5 @@ export default function Events() {
     </div>
   );
 }
+
+

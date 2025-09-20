@@ -1,5 +1,4 @@
-
-  .poster-card-wrapper .poster-card {
+.poster-card-wrapper .poster-card {
   width: 400px;
   height: 600px;
   border-radius: 10px;
@@ -11,6 +10,11 @@
   margin: 0 15px;
   flex-shrink: 0;
   transition: transform 0.2s ease;
+  color: #000; /* default text color */
+}
+
+.poster-card-wrapper .poster-card.with-bg {
+  color: #fff; /* optional for dark backgrounds */
 }
 
 .poster-card-wrapper .poster-card:hover {
@@ -48,14 +52,24 @@
   font-style: italic;
 }
 
+.poster-card-wrapper .poster-posterpath,
+.poster-card-wrapper .poster-videopath,
 .poster-card-wrapper .poster-date,
 .poster-card-wrapper .poster-time,
-.poster-card-wrapper .poster-venue {
+.poster-card-wrapper .poster-venue,
+.poster-card-wrapper .poster-contact
+{
   font-size: 14px;
   position: absolute;
   left: 20px;
 }
 
+.poster-card-wrapper .poster-posterpath {
+  bottom: 150px;
+}
+.poster-card-wrapper .poster-videopath {
+  bottom: 125px;
+}
 .poster-card-wrapper .poster-date {
   bottom: 100px;
 }
@@ -65,8 +79,50 @@
 .poster-card-wrapper .poster-venue {
   bottom: 60px;
 }
+.poster-card-wrapper .poster-contact {
+  bottom: 40px;
+}
 
-/* Responsive rules */
+.poster-card-wrapper .icon {
+  margin-right: 6px;
+
+}
+.poster-card-wrapper .poster-posterpath a,
+.poster-card-wrapper .poster-videopath a
+ {
+  color: #0000ee; /* default link blue */
+  text-decoration: underline;
+
+}
+/* Poster registration button */
+.poster-registration {
+  position: absolute;
+  bottom: 0px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  padding: 10px 0;
+  bottom:0px;
+}
+
+/* Button style */
+.poster-registration button {
+  background-color: inherit; /* use inline style or template.accentColor */
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: transform 0.2s ease;
+}
+
+.poster-registration button:hover {
+  transform: scale(1.05);
+}
+
+
+/* Responsive */
 @media (min-width: 768px) and (max-width: 1024px) {
   .poster-card-wrapper .poster-card {
     width: 320px;
@@ -77,23 +133,25 @@
   }
   .poster-card-wrapper .poster-organizer,
   .poster-card-wrapper .poster-category,
-  .poster-card-wrapper .poster-description {
-    font-size: 14px;
+  .poster-card-wrapper .poster-description{
+    font-size:14px;
   }
-  poster-card-wrapper .poster-organizer{
-    top:60px;
-  }
-  .poster-card-wrapper .poster-category{
-    top:85px;
-  }
-  .poster-card-wrapper .poster-description {
-    top:105px;
-  }
+  
   .poster-card-wrapper .poster-date,
   .poster-card-wrapper .poster-time,
-  .poster-card-wrapper .poster-venue {
+  .poster-card-wrapper .poster-venue,
+  .poster-card-wrapper .poster-contact,
+  .poster-card-wrapper .poster-posterpath,
+  .poster-card-wrapper .poster-videopath
+   {
     font-size: 12px;
   }
+  .poster-registration button {
+    padding: 8px 16px; /* smaller button */
+    font-size: 14px;
+    bottom:0px;   /* smaller text */
+  }
+  
 }
 
 @media (max-width: 767px) {
@@ -104,39 +162,55 @@
     height: auto;
     aspect-ratio: 2/3;
   }
-
   .poster-card-wrapper .poster-title {
     font-size: 18px;
   }
-
   .poster-card-wrapper .poster-organizer,
   .poster-card-wrapper .poster-category,
-  .poster-card-wrapper .poster-description {
-    font-size: 12px;
+  .poster-card-wrapper .poster-description{
+    font-size:12px;
   }
-
+  
   .poster-card-wrapper .poster-date,
   .poster-card-wrapper .poster-time,
-  .poster-card-wrapper .poster-venue {
+  .poster-card-wrapper .poster-venue,
+  .poster-card-wrapper .poster-contact,
+  .poster-card-wrapper .poster-posterpath,
+  .poster-card-wrapper .poster-videopath
+   {
     font-size: 10px;
   }
-  .poster-card-wrapper .poster-organizer{
-    top:55px;
+  .poster-card-wrapper .poster-organizer {
+    top: 55px;
   }
-  .poster-card-wrapper .poster-category{
-    top:80px;
+  .poster-card-wrapper .poster-category {
+    top: 80px;
   }
   .poster-card-wrapper .poster-description {
-    top:100px;
+    top: 100px;
   }
-
   .poster-card-wrapper .poster-venue {
-    bottom: 35px;
+    bottom: 45px;
   }
   .poster-card-wrapper .poster-time {
-    bottom: 50px;
+    bottom: 60px;
   }
   .poster-card-wrapper .poster-date {
-    bottom: 65px;
+    bottom: 75px;
   }
+  .poster-card-wrapper .poster-contact {
+    bottom: 30px;
+  }
+  .poster-card-wrapper .poster-posterpath {
+    bottom: 105px;
+  }
+  .poster-card-wrapper .poster-videopath {
+    bottom: 90px;
+  }
+  .poster-registration button {
+    padding: 6px 12px; /* smallest button */
+    font-size: 12px; 
+    bottom:0px;  /* smallest text */
+  }
+ 
 }

@@ -1,17 +1,11 @@
-// src/components/PosterCard.jsx
 import React from "react";
 import "./PosterCard.css";
 import { templates } from "./PosterTemplates";
-import { FaCalendarAlt, FaClock, FaMapMarkerAlt } from "react-icons/fa";
+import { FaCalendarAlt, FaClock, FaMapMarkerAlt, FaPhone, FaVideo, FaImage } from "react-icons/fa";
 
-// Helper functions
 function formatDateString(dateInput) {
   if (!dateInput) return "";
-
-  if (/^\d{4}-\d{2}-\d{2}$/.test(dateInput)) {
-    return dateInput;
-  }
-
+  if (/^\d{4}-\d{2}-\d{2}$/.test(dateInput)) return dateInput;
   const dt = new Date(dateInput);
   if (!isNaN(dt)) {
     const y = dt.getFullYear();
@@ -19,7 +13,6 @@ function formatDateString(dateInput) {
     const d = String(dt.getDate()).padStart(2, "0");
     return `${y}-${m}-${d}`;
   }
-
   return dateInput;
 }
 
@@ -42,11 +35,7 @@ export default function PosterCard({ event, templateIndex }) {
   const template =
     templates && templates.length > 0
       ? templates[templateIndex ?? Math.floor(Math.random() * templates.length)]
-      : {
-          backgroundImage: "",
-          textColor: "#000",
-          accentColor: "#007bff",
-        };
+      : { backgroundImage: "", textColor: "#000", accentColor: "#007bff" };
 
   const eventDate = formatDateString(event.date ?? event.event_date ?? "");
   const startTime = formatTimeString(event.startTime ?? event.start_time ?? "");
@@ -55,8 +44,8 @@ export default function PosterCard({ event, templateIndex }) {
   return (
     <div className="poster-card-wrapper">
       <div
-        className="poster-card"
-        style={{ backgroundImage: `url(${template.backgroundImage})` }}
+        className={`poster-card ${template.backgroundImage ? "with-bg" : ""}`}
+        style={{ backgroundImage: template.backgroundImage ? `url(${template.backgroundImage})` : "none" }}
       >
         <h2 className="poster-title" style={{ color: template.textColor }}>
           {event.name ?? event.event_name}
@@ -74,18 +63,55 @@ export default function PosterCard({ event, templateIndex }) {
           {event.description}
         </p>
 
-        <p className="poster-date small-text" style={{ color: template.textColor }}>
-          <FaCalendarAlt style={{ marginRight: "6px" }} /> {eventDate}
+        {event.posterpath && (
+          <p className="poster-posterpath" style={{ color: template.textColor }}>
+            <FaImage className="icon" style={{ color: template.textColor }} />
+            <a href={event.posterpath} target="_blank" rel="noopener noreferrer">
+               Click here to view image
+            </a>
+          </p>
+        )}
+
+        {event.videopath && (
+          <p className="poster-videopath" style={{ color: template.textColor }}>
+            <FaVideo className="icon" style={{ color: template.textColor }} />
+            <a href={event.videopath} target="_blank" rel="noopener noreferrer">
+               Click here to watch video
+            </a>
+          </p>
+        )}
+
+        <p className="poster-date" style={{ color: template.textColor }}>
+          <FaCalendarAlt className="icon" /> {eventDate}
         </p>
 
-        <p className="poster-time small-text" style={{ color: template.textColor }}>
-          <FaClock style={{ marginRight: "6px" }} /> {startTime}
+        <p className="poster-time" style={{ color: template.textColor }}>
+          <FaClock className="icon" /> {startTime}
           {endTime ? ` – ${endTime}` : ""}
         </p>
 
-        <p className="poster-venue small-text" style={{ color: template.textColor }}>
-          <FaMapMarkerAlt style={{ marginRight: "6px" }} /> {event.venue}
+        <p className="poster-venue" style={{ color: template.textColor }}>
+          <FaMapMarkerAlt className="icon" /> {event.venue}
         </p>
+
+        {event.contact && (
+          <p className="poster-contact" style={{ color: template.textColor }}>
+            <FaPhone className="icon" /> {event.contact}
+          </p>
+        )}
+        {event.registration_link && (
+  <div className="poster-registration">
+    <button
+      onClick={() => window.open(event.registration_link, "_blank")}
+      style={{ backgroundColor: template.accentColor }}
+    >
+      Register
+    </button>
+  </div>
+)}
+
+
+        
       </div>
     </div>
   );
