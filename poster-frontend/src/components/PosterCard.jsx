@@ -2,10 +2,9 @@
 import React from "react";
 import "./PosterCard.css";
 import { templates } from "./PosterTemplates";
-import { toast } from "react-toastify"; 
 import { FaCalendarAlt, FaClock, FaMapMarkerAlt } from "react-icons/fa";
 
-// ✅ Helper functions
+// Helper functions
 function formatDateString(dateInput) {
   if (!dateInput) return "";
 
@@ -40,7 +39,6 @@ function formatTimeString(timeInput) {
 export default function PosterCard({ event, templateIndex }) {
   if (!event) return null;
 
-  // ✅ Use the templateIndex passed from Events.jsx
   const template =
     templates && templates.length > 0
       ? templates[templateIndex ?? Math.floor(Math.random() * templates.length)]
@@ -53,10 +51,6 @@ export default function PosterCard({ event, templateIndex }) {
   const eventDate = formatDateString(event.date ?? event.event_date ?? "");
   const startTime = formatTimeString(event.startTime ?? event.start_time ?? "");
   const endTime = formatTimeString(event.endTime ?? event.end_time ?? "");
-
-  const handleRegister = () => {
-    toast.success(`Successfully registered for "${event.name ?? event.event_name}"!`);
-  };
 
   return (
     <div className="poster-card-wrapper">
@@ -80,26 +74,18 @@ export default function PosterCard({ event, templateIndex }) {
           {event.description}
         </p>
 
-        <p className="poster-date" style={{ color: template.textColor }}>
+        <p className="poster-date small-text" style={{ color: template.textColor }}>
           <FaCalendarAlt style={{ marginRight: "6px" }} /> {eventDate}
         </p>
 
-        <p className="poster-time" style={{ color: template.textColor }}>
+        <p className="poster-time small-text" style={{ color: template.textColor }}>
           <FaClock style={{ marginRight: "6px" }} /> {startTime}
           {endTime ? ` – ${endTime}` : ""}
         </p>
 
-        <p className="poster-venue" style={{ color: template.textColor }}>
+        <p className="poster-venue small-text" style={{ color: template.textColor }}>
           <FaMapMarkerAlt style={{ marginRight: "6px" }} /> {event.venue}
         </p>
-
-        <button
-          className="register-button"
-          style={{ backgroundColor: template.accentColor }}
-          onClick={handleRegister}
-        >
-          Register
-        </button>
       </div>
     </div>
   );

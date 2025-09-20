@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from "react";
 import PosterCard from "../components/PosterCard";
-import { ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 import "./Events.css";
 import { templates } from "../components/PosterTemplates";
 
@@ -99,16 +97,6 @@ export default function Events() {
       ) : (
         <p>No events to display</p>
       )}
-
-      <ToastContainer
-        position="top-right"
-        autoClose={2000}
-        hideProgressBar
-        newestOnTop
-        closeOnClick
-        pauseOnHover
-        draggable
-      />
     </div>
   );
 }
